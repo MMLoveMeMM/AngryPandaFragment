@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="panel_y_offset">50dip</dimen>
+
+</resources>
