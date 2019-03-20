@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import cn.pumpkin.angrypandafragment.eventbus.KeyCodeEvent;
 import cn.pumpkin.angrypandafragment.inf.ICallBack;
+import de.greenrobot.event.EventBus;
 
 public abstract class BaseActivity extends AppCompatActivity implements ICallBack {
 
@@ -15,11 +17,15 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallBac
     protected FragmentManager manager;
     protected FragmentTransaction transaction;
 
+    protected EventBus eventBus;
+
     protected int keyCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        eventBus = new EventBus();
 
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
@@ -30,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallBac
         Log.e(TAG,"onKeyDown : " + keyCode);
         this.keyCode = keyCode;
         doBack(3);
+        eventBus.post(new KeyCodeEvent(keyCode));
         return super.onKeyDown(keyCode, event);
     }
 

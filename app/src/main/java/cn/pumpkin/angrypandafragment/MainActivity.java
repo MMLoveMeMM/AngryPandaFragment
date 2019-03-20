@@ -2,27 +2,31 @@ package cn.pumpkin.angrypandafragment;
 
 import android.os.Bundle;
 
-import cn.pumpkin.angrypandafragment.app.App;
 import cn.pumpkin.angrypandafragment.fragment.DetailsFragment;
 import cn.pumpkin.angrypandafragment.fragment.HomeFragment;
 import cn.pumpkin.angrypandafragment.fragment.NumberFragment;
-import cn.pumpkin.angrypandafragment.wm.WmPanel;
 
 public class MainActivity extends BaseActivity {
+
+    private DetailsFragment detailsFragment = new DetailsFragment();
+    private HomeFragment homeFragment = new HomeFragment();
+    private NumberFragment numberFragment = new NumberFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        detailsFragment = new DetailsFragment();
+        homeFragment = new HomeFragment();
+        numberFragment = new NumberFragment();
+
+        eventBus.register(numberFragment);
+
         transaction.add(R.id.container, homeFragment, "home");
         transaction.commit();
 
     }
-
-    DetailsFragment detailsFragment = new DetailsFragment();
-    HomeFragment homeFragment = new HomeFragment();
-    NumberFragment numberFragment = new NumberFragment();
 
     @Override
     public void doBack(int config) {

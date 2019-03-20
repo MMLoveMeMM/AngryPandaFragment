@@ -1,6 +1,5 @@
 package cn.pumpkin.angrypandafragment.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import cn.pumpkin.angrypandafragment.R;
+import cn.pumpkin.angrypandafragment.eventbus.KeyCodeEvent;
 import cn.pumpkin.angrypandafragment.inf.ICallBack;
+import de.greenrobot.event.Subscribe;
 
 /**
  * @author: zhibao.Liu
@@ -25,6 +26,7 @@ import cn.pumpkin.angrypandafragment.inf.ICallBack;
 public class NumberFragment extends Fragment {
 
     private Button btn;
+    private TextView editText;
     private ICallBack mICallBack;
     private int keyCode;
 
@@ -49,7 +51,7 @@ public class NumberFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.number_fragment, null);
-        TextView editText = (TextView) root.findViewById(R.id.hello);
+        editText = (TextView) root.findViewById(R.id.hello);
         editText.setText("current key code : " + keyCode);
         btn = (Button) root.findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +60,16 @@ public class NumberFragment extends Fragment {
                 mICallBack.doBack(2);
             }
         });
+
         return root;
+
     }
 
+    @Subscribe
+    public void listener(KeyCodeEvent eventMessage){
+        if(editText!=null) {
+            editText.setText("current key code : " + eventMessage.getKeyCode());
+        }
+    }
 
 }
